@@ -10,8 +10,9 @@ env:
 
 jobs:
   build-debian-iso:
-    # This job requires a self-hosted runner with Debian bookworm
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
+    container:
+      image: debian:bookworm
 
     steps:
     - name: Checkout repository
