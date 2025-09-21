@@ -1,14 +1,12 @@
 name: Build Debian ISO with KnowledgeBox Containers
 
 on:
-  workflow_dispatch:
-    inputs:
-      kiwix_content_urls:
-        description: 'Kiwix content URLs (space-separated)'
-        required: true
-        default: 'https://download.kiwix.org/zim/wikipedia/wikipedia_en_for_schools_nopic_2024-08.zim'
   push:
     branches: [ main ]
+
+env:
+  KIWIX_CONTENT_URLS: |
+    https://download.kiwix.org/zim/wikipedia/wikipedia_en_for_schools_nopic_2024-08.zim
 
 jobs:
   build-debian-iso:
@@ -34,7 +32,6 @@ jobs:
     - name: Add Kiwix content
       run: |
         cd TwB-Knowledge-Box/kiwix/content
-        KIWIX_CONTENT_URLS="${{ github.event.inputs.kiwix_content_urls }}"
         for url in $KIWIX_CONTENT_URLS; do
           wget "$url"
         done
