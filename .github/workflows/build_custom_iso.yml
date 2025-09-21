@@ -2,7 +2,6 @@ name: Build Debian ISO with KnowledgeBox Containers
 
 on:
   push:
-    branches: [ main ]
 
 env:
   KIWIX_CONTENT_URLS: |
