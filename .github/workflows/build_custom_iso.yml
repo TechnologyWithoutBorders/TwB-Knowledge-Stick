@@ -29,6 +29,7 @@ jobs:
         git clone https://github.com/TechnologyWithoutBorders/TwB-Knowledge-Box
         cd TwB-Knowledge-Box
         sudo docker-compose build && sudo docker-compose pull
+        sudo ../export_all_docker_images.sh
 
     - name: Add Kiwix content
       run: |
