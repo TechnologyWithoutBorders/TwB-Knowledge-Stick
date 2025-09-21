@@ -5,7 +5,7 @@ on:
     inputs:
       kiwix_content_urls:
         description: 'Kiwix content URLs (space-separated)'
-        required: false
+        required: true
         default: 'https://download.kiwix.org/zim/wikipedia/wikipedia_en_for_schools_nopic_2024-08.zim'
   push:
     branches: [ main ]
