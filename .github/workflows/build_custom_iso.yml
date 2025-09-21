@@ -19,15 +19,15 @@ jobs:
 
     - name: Install dependencies
       run: |
-        sudo apt-get update
-        sudo apt-get install -y live-build docker.io docker-compose git apparmor
+        apt-get update
+        apt-get install -y live-build docker.io docker-compose git apparmor
 
     - name: Clone KnowledgeBox repository and build (+ save) container images
       run: |
         git clone https://github.com/TechnologyWithoutBorders/TwB-Knowledge-Box
         cd TwB-Knowledge-Box
-        sudo docker-compose build && sudo docker-compose pull
-        sudo ../export_all_docker_images.sh
+        docker-compose build && docker-compose pull
+        ../export_all_docker_images.sh
 
     - name: Add Kiwix content
       run: |
@@ -51,9 +51,9 @@ jobs:
     - name: Add container images and systemd files
       run: |
         mkdir -p debian-live/config/includes.chroot/root/
-        sudo cp -r TwB-Knowledge-Box debian-live/config/includes.chroot/root/
+        cp -r TwB-Knowledge-Box debian-live/config/includes.chroot/root/
         mkdir -p debian-live/config/includes.chroot/etc/systemd/system/
-        sudo cp ./knobo-containers.service debian-live/config/includes.chroot/etc/systemd/system/
+        cp ./knobo-containers.service debian-live/config/includes.chroot/etc/systemd/system/
         # Enable the service via symlink
         mkdir -p debian-live/config/includes.chroot/etc/systemd/system/multi-user.target.wants
         ln -s /etc/systemd/system/knobo-containers.service debian-live/config/includes.chroot/etc/systemd/system/multi-user.target.wants/knobo-containers.service
@@ -61,7 +61,7 @@ jobs:
     - name: Build ISO
       run: |
         cd debian-live
-        sudo lb build
+        lb build
 
     - name: Upload ISO artifact
       uses: actions/upload-artifact@v4
