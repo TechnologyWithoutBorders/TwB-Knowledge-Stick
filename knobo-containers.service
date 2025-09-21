@@ -1,0 +1,20 @@
+[Unit]
+Description=Import Docker images and run Docker Compose
+After=network.target docker.service
+Requires=docker.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=true
+
+# Import all Docker images from /opt/docker-images/*.tar
+ExecStartPre=/bin/bash -c 'for img in /root/TwB-Knowledge-Box/docker-images/*.tar; do docker load -i "$img"; done'
+
+# Run Docker Compose
+ExecStart=/usr/bin/docker-compose -f /root/TwB-Knowledge-Box/docker-compose.yml up -d
+
+# Optional: Stop Compose on service stop
+ExecStop=/usr/bin/docker-compose -f /root/TwB-Knowledge-Box/docker-compose.yml down
+
+[Install]
+WantedBy=multi-user.target
